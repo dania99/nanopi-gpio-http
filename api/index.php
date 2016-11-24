@@ -2,9 +2,9 @@
 
 $gpio_config = array(
     # channel => gpio
-    "0" => "199", # pin10
+    "0" => "203", # pin7
     "1" => "198", # pin8
-    "2" => "203" # pin7
+    "2" => "199", # pin10
 );
 
 $parts = explode('/', $_SERVER['REQUEST_URI']);
