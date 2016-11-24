@@ -9,30 +9,9 @@
     <meta name="description" content="Embedded System Engineer, Tech Junkie, Minimalist, Food Lover">
     <meta name="author" content="Md. Minhazul Haque">
     <link href="bootstrap.min.css" rel="stylesheet">
-    <script>
-        var btn_on = document.getElementById('on');
-        var btn_off = document.getElementById('off');
-        
-        btn_on.disabled = false;
-        btn_off.disabled = true;
-        
-        function motor_handle(state) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/0/" + state);
-            xhr.send();
-            
-            if(state == 'on') {
-                btn_on.disabled = true;
-                btn_off.disabled = false;
-            } else  {
-                btn_on.disabled = false;
-                btn_off.disabled = true;
-            }
-        }
-    </script>
 </head>
 
-<body>
+<body onload="motor_handle('off', 0);motor_handle('off', 1);motor_handle('off', 2);">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -53,10 +32,49 @@
                     </div>
                 </nav>
                 <div class="btn-group">
-                    <button id="on" class="btn btn-danger" type="button" onclick="motor_handle('on')">On</button>
-                    <button id="off" class="btn btn-success" type="button" onclick="motor_handle('off')">Off</button>
+                    <button class="btn btn-info">Channel 1</button>
+                    <button id="on0" class="btn btn-danger" type="button" onclick="motor_handle('on', 0)">On</button>
+                    <button id="off0" class="btn btn-success" type="button" onclick="motor_handle('off', 0)">Off</button>
                 </div>
+                <br>
+                <br>
+                <div class="btn-group">
+                    <button class="btn btn-info">Channel 2</button>
+                    <button id="on1" class="btn btn-danger" type="button" onclick="motor_handle('on', 1)">On</button>
+                    <button id="off1" class="btn btn-success" type="button" onclick="motor_handle('off', 1)">Off</button>
+                </div>
+                <br>
+                <br>
+                <div class="btn-group">
+                    <button class="btn btn-info">Channel 3</button>
+                    <button id="on2" class="btn btn-danger" type="button" onclick="motor_handle('on', 2)">On</button>
+                    <button id="off2" class="btn btn-success" type="button" onclick="motor_handle('off', 2)">Off</button>
+                </div>
+                <br>
             </div>
         </div>
     </div>
 </body>
+    <script>
+        document.getElementById('on0').disabled = false;
+        document.getElementById('off0').disabled = true;
+        document.getElementById('on1').disabled = false;
+        document.getElementById('off1').disabled = true;
+        document.getElementById('on2').disabled = false;
+        document.getElementById('off2').disabled = true;
+        
+        function motor_handle(state, channel) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/" + channel + "/" + state);
+            xhr.send();
+            
+            if(state == 'on') {
+                document.getElementById('on'+channel).disabled = true;
+                document.getElementById('off'+channel).disabled = false;
+            } else  {
+                document.getElementById('on'+channel).disabled = false;
+                document.getElementById('off'+channel).disabled = true;
+            }
+        }
+    </script>
+</html>
